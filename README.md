@@ -18,9 +18,9 @@ DDI-GCN is implemented on the basic running environment below.
 * [rdkit](https://www.rdkit.org/) == 2020.09.1
 
 ## Usage
-The **folder Binary/Negative sampling** contains the code for binary task where the DDI negatives are from PULearn sampling.
-The **folder **Binary/Randomized sampling** contains the code for binary task where the DDI negatives random sampling.
-The **folder **Categorical** contains the code for categorial task.
+The **folder Binary/Negative sampling** contains the code for binary task where the DDI negatives are from PULearn sampling.\
+The **folder Binary/Randomized sampling** contains the code for binary task where the DDI negatives random sampling.\
+The **folder Categorical** contains the code for categorial task.\
 Download the [data](http://wengzq-lab.cn/ddi/download.php), and put the ***.csv files to the corresponding folder. 
 Then run by
    * python train_ddi.py
