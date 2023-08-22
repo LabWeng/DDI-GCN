@@ -32,7 +32,7 @@ tst_steps = int(len(tst_dataset.index)/batch_size)
 # def sparse_categorical_crossentropy(y_true, y_pred):
 #     return K.sparse_categorical_crossentropy(y_true, y_pred+1e-5)
 model = ddi_gcn_with_attention(fp_depth = fp_depth, conv_width =128,max_atoms = max_atom,
-                                            L2_reg = False, num_input_atom_features = 51,
+                                            num_input_atom_features = 51,
                                             num_bond_features = 10)
 
 # %%
