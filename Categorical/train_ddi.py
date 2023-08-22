@@ -70,26 +70,4 @@ history1_3 = model.fit_generator(train_data_generator(tr_dataset,batch_size,max_
 # %%
 pd.DataFrame(history1_3.history).to_csv(r'history_depth_{}.history.csv'.format(fp_depth))
 
-# %%
-#Evaluate 
-pred_res = model.predict_generator(train_data_generator(tst_dataset,batch_size,max_atom),steps=tst_steps,verbose=1)
-
-# %%
-def evaluate(pred,dataset,numberoftype=106):
-    from sklearn.metrics import accuracy_score,average_precision_score,roc_auc_score
-    all_pred = []
-    for i in pred:
-        all_pred.append(np.argmax(i))
-    all_pred = np.array(all_pred)
-    label = dataset['DDI'].tolist()[:pred.shape[0]]
-    acc = accuracy_score(label,all_pred)
-    label =np.eye(numberoftype)[label]
-    auc = roc_auc_score(label,pred,average='micro')
-    aupr = average_precision_score(label,pred,average='micro')
-    return 'ACC:',round(acc,3),'AUC:',round(auc,3),'AUPR:',round(aupr,3)
-    # return acc,auc,aupr
-
-# %%
-print(evaluate(pred_res,tst_dataset))
-
 
