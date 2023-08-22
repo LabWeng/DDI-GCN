@@ -113,12 +113,12 @@ def ddi_gcn_with_attention(fp_depth = 4, conv_width = 20,max_atoms = 10,
         atom_features = new_atom_features
         num_atom_features = conv_width
         all_atom_features.append(atom_features) 
-    lstm_layer = tf.keras.layers.GRU(conv_width,return_sequences=True)
-    bi_lstm = tf.keras.layers.Bidirectional(lstm_layer)
+    gru_layer = tf.keras.layers.GRU(conv_width,return_sequences=True)
+    bi_gru = tf.keras.layers.Bidirectional(gru_layer)
     scale_layer = tf.keras.layers.Dense(1,activation='tanh')
     stack_and_transpose_atom_features = tf.transpose(tf.stack(all_atom_features),[1,2,0,3])
     reshaped_atom_features = tf.reshape(stack_and_transpose_atom_features,[-1,len(all_atom_features),conv_width]) # [batch_size*num_atom,layers,conv_with]
-    final_states = bi_lstm(reshaped_atom_features) # [batch_size*num_atom,layers,conv_with*2]
+    final_states = bi_gru(reshaped_atom_features) # [batch_size*num_atom,layers,conv_with*2]
     align_weights = scale_layer(final_states) # [batch_size*num_atom,layers,1] 
     scaled_align_weights = tf.nn.softmax(align_weights,axis=-2) # [batch_size*num_atom,layers,1] 
     output_features = tf.squeeze(tf.matmul(tf.transpose(scaled_align_weights,[0,2,1]),final_states),axis=-2) # [batch_size*num_atom,embedding]
@@ -141,7 +141,7 @@ def ddi_gcn_with_attention(fp_depth = 4, conv_width = 20,max_atoms = 10,
     outputs = layers.Add()([gcn_a,gcn_b])
     for hidden in [100,100,100]:
         outputs = layers.Dense(hidden,activation = 'relu',kernel_regularizer= tf.keras.regularizers.l2(L2_reg))(outputs)
-    outputs = layers.Dense(1,activation = 'sigmoid')(outputs)
+    outputs = layers.Dense(2,activation = 'softmax')(outputs)
     models = Model(inputs=[inputs_a,inputs_b,attention_mask_for_inputs_q,\
                            mean_mask_q,mean_mask_a,
                            attention_mask_for_inputs_a], outputs=[outputs])
