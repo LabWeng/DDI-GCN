@@ -30,7 +30,7 @@ tst_steps = int(len(tst_dataset.index)/batch_size)
 
 # %%
 model = ddi_gcn_with_attention(fp_depth = fp_depth, conv_width =128,max_atoms = max_atom,
-                                            L2_reg = False, num_input_atom_features = 51,
+                                            num_input_atom_features = 51,
                                             num_bond_features = 10)
 
 # %%
