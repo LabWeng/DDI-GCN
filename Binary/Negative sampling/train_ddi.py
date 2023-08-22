@@ -58,7 +58,7 @@ def aupr_score(y_true, y_pred):
 
 # %%
 optimizer = optimizers.Adam(lr = 0.0001)
-model.compile(optimizer=optimizer, loss='binary_crossentropy',metrics = ['accuracy',auc,aupr_score])
+model.compile(optimizer=optimizer, loss='sparse_categorical_crossentropy',metrics = ['accuracy'])
 
 # %%
 history1_3 = model.fit_generator(train_data_generator(tr_dataset,batch_size,max_atom),callbacks = callbacks,
@@ -66,21 +66,5 @@ history1_3 = model.fit_generator(train_data_generator(tr_dataset,batch_size,max_
 
 # %%
 pd.DataFrame(history1_3.history).to_csv(r'history_depth_{}.history.csv'.format(fp_depth),index=False)
-
-# %%
-# %%
-#Evaluate 
-pred_res = model.predict_generator(train_data_generator(tst_dataset,batch_size,max_atom),steps=tst_steps,verbose=1)
-def evaluates(pred,dataset):
-    from sklearn.metrics import accuracy_score,average_precision_score,roc_auc_score
-    predicts = np.where(pred>=0.5,1,0)
-    label = dataset['DDI'].tolist()[:pred.shape[0]]
-    acc = accuracy_score(predicts,label)
-    auc = roc_auc_score(label,pred)
-    aupr = average_precision_score(label,pred)
-    return 'ACC:',round(acc,3),'AUC:',round(auc,3),'AUPR:',round(aupr,3)
-
-# %%
-print(evaluates(pred_res,tst_dataset))
 
 
