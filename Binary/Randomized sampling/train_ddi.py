@@ -10,6 +10,8 @@ from utils import *
 from ddi_model import ddi_gcn_with_attention
 import pandas as pd 
 import numpy as np 
+from rdkit import RDLogger
+RDLogger.DisableLog('rdApp.*')
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 config = tf.ConfigProto()
 config.gpu_options.allow_growth=True
