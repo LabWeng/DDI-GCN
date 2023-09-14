@@ -19,7 +19,7 @@ DDI-GCN is implemented on the basic running environment below.
 
 ## Usage
 The **folder Binary/Negative sampling** contains the code for binary task where the DDI negatives are from PULearn sampling.\
-The **folder Binary/Randomized sampling** contains the code for binary task where the DDI negatives are random sampling.\
+The **folder Binary/Randomized sampling** contains the code for binary task where the DDI negatives are from random sampling.\
 The **folder Categorical** contains the code for categorial task.\
 Download the [data](http://wengzq-lab.cn/ddi/download.php), and put the ***.csv files to the corresponding folder. 
 Then run by
